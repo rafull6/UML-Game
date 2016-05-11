@@ -25,8 +25,6 @@
 		<image file="explosion.png" cols="12"/>
 		<image file="shield.png"/>
 	</atlas>
-<<<<<<< HEAD
-=======
 	
 	<set path = "../images/pups" />
 	<atlas>
@@ -39,5 +37,4 @@
 		<image file="wpn-0.png" />
 		<image file="wpn-1.png" />
 	</atlas>
->>>>>>> powerup-object
 </resources>

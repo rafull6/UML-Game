@@ -134,18 +134,6 @@ void Player::_loadKeys()
 
 }
 
-<<<<<<< HEAD
-void Player::hit()
-{
-	//hit by rocket
-	_hp--;
-	if (_hp == 0)
-	{
-		//dead, hide it with alpha tween
-		_dead = true;
-		_view->addTween(Actor::TweenAlpha(0), 300)->setDetachActor(true);
-	}
-=======
 void Player::hit(int damage)
 {
 	//hit by rocket
@@ -217,5 +205,4 @@ void Player::_die()
 		_dead = true;
 		_view->addTween(Actor::TweenAlpha(0), 300)->setDetachActor(true);
 	
->>>>>>> powerup-object
 }
