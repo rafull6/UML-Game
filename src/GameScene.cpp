@@ -3,6 +3,8 @@
 #include "GameButton.h"
 #include "resources.h"
 #include "GameMenu.h"
+#include "Audio.h"
+
 
 spGameScene GameScene::instance;
 
@@ -34,6 +36,7 @@ GameScene::GameScene()
 
     //subscribe to Hidden Event from GameMenu
     GameMenu::instance->addEventListener(GameScene::HiddenEvent::EVENT, CLOSURE(this, &GameScene::onEvent));
+	play_music();
 }
 
 void GameScene::onEvent(Event* ev)

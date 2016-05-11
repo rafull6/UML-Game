@@ -8,6 +8,7 @@
 #include "Stage.h"
 #include "DebugActor.h"
 #include "aircraft.h"
+#include "Audio.h"
 
 
 using namespace oxygine;
@@ -18,6 +19,7 @@ int mainloop()
 {
     // It gets passed to our aircraft game implementation
 	aircraft_update();
+	audio_update();
 
     // Update our stage
     // Update all actors. Actor::update will also be called for all its children
@@ -57,8 +59,8 @@ void run()
     // Marmalade settings can be modified from the emulator's menu
 #endif
 
-
 	aircraft_preinit();
+	//audio_preinit();
     core::init(&desc);
 
 
@@ -72,6 +74,7 @@ void run()
 
     // Initializes our game. See aircraft.cpp
 	aircraft_init();
+	audio_init();
 
 #ifdef EMSCRIPTEN
     /*
@@ -104,6 +107,7 @@ void run()
 
     // See aircraft.cpp for the shutdown function implementation
 	aircraft_destroy();
+	audio_destroy();
 
 
     //renderer.cleanup();

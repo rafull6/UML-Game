@@ -1,5 +1,5 @@
 #pragma once
-#include "P:\Oxygine\UML-Game\src\Unit.h"
+#include "Unit.h"
 
 
 DECLARE_SMART(Pickup, spPickup);
