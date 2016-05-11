@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "audio" />	
+	
+	<sound file="music1.ogg" streaming="true"/>
+	<sound file="explosion1.ogg"/>
+	<sound file="explosion2.ogg"/>
+	<sound file="fly1.ogg"/>
+	<sound file="fly2.ogg"/>
+	
+</resources>
