@@ -43,7 +43,11 @@ void Rocket::_update(const UpdateState& us)
 			if (d.length() < 20)
 			{
 				//if rocket is too close to Enemy then try to explode it and explode rocket
+<<<<<<< HEAD
 				enemy->explode();
+=======
+				enemy->hit(1);
+>>>>>>> powerup-object
 				explode();
 				return;
 			}
@@ -57,7 +61,11 @@ void Rocket::_update(const UpdateState& us)
 			{
 				if (player->getPlayerName() != _senderName)
 				{
+<<<<<<< HEAD
 					player->hit();
+=======
+					player->hit(1);
+>>>>>>> powerup-object
 					explode();
 					return;
 				}

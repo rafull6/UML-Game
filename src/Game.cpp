@@ -2,6 +2,10 @@
 #include "Player.h"
 #include "resources.h"
 #include "Obstacle.h"
+<<<<<<< HEAD
+=======
+#include "Pickup.h"
+>>>>>>> powerup-object
 
 Game::Game()
 {
@@ -39,6 +43,18 @@ void Game::init()
     }
 
 
+<<<<<<< HEAD
+=======
+		spPickup pickup_pup0 = new Pickup("pup",0);
+		pickup_pup0->init(Vector2(scalar::randFloat(0, getWidth()), scalar::randFloat(0, getHeight())), this);
+		spPickup pickup_pup1 = new Pickup("pup", 1);
+		pickup_pup1->init(Vector2(scalar::randFloat(0, getWidth()), scalar::randFloat(0, getHeight())), this);
+		spPickup pickup_wpn0 = new Pickup("wpn", 0);
+		pickup_wpn0->init(Vector2(scalar::randFloat(0, getWidth()), scalar::randFloat(0, getHeight())), this);
+		spPickup pickup_wpn1 = new Pickup("wpn" ,1);
+		pickup_wpn1->init(Vector2(scalar::randFloat(0, getWidth()), scalar::randFloat(0, getHeight())), this);
+
+>>>>>>> powerup-object
     //create player ship
     _player = new Player("Player1");
     _player->init(getSize() / 2, this);

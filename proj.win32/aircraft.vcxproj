@@ -119,6 +119,10 @@
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\MainMenuScene.cpp" />
     <ClCompile Include="..\src\Obstacle.cpp" />
+<<<<<<< HEAD
+=======
+    <ClCompile Include="..\src\Pickup.cpp" />
+>>>>>>> powerup-object
     <ClCompile Include="..\src\Player.cpp" />
     <ClCompile Include="..\src\resources.cpp" />
     <ClCompile Include="..\src\Rocket.cpp" />
@@ -133,6 +137,10 @@
     <ClInclude Include="..\src\GameScene.h" />
     <ClInclude Include="..\src\MainMenuScene.h" />
     <ClInclude Include="..\src\Obstacle.h" />
+<<<<<<< HEAD
+=======
+    <ClInclude Include="..\src\Pickup.h" />
+>>>>>>> powerup-object
     <ClInclude Include="..\src\Player.h" />
     <ClInclude Include="..\src\resources.h" />
     <ClInclude Include="..\src\Rocket.h" />

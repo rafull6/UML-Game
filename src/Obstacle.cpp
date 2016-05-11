@@ -28,6 +28,7 @@ void Obstacle::_update(const UpdateState& us)
     //nothing to do
 }
 
+<<<<<<< HEAD
 void Obstacle::explode()
 {
     //hit by rocket
@@ -38,4 +39,24 @@ void Obstacle::explode()
         _dead = true;
         _view->addTween(Actor::TweenAlpha(0), 300)->setDetachActor(true);
     }
+=======
+void Obstacle::hit(int damage)
+{
+	//hit by rocket
+	_hp-=damage;
+	if (_hp <= 0)
+	{
+		_die();
+	}
+}
+
+void Obstacle::_die()
+{
+
+
+	//dead, hide it with alpha tween
+	_dead = true;
+	_view->addTween(Actor::TweenAlpha(0), 300)->setDetachActor(true);
+
+>>>>>>> powerup-object
 }
