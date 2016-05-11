@@ -7,12 +7,15 @@ class Player: public Unit
 {
 public:
      Player(std::string playerName);
-	 void hit();
-
+	 void hit(int damage);
+	 void _die();
 	 std::string getPlayerName()
 	 {
 		 return _playerName;
 	 };
+	 void pickup_pup(int id);
+	 void pickup_wpn(int id);
+
 private:
     void _init();
     void _update(const UpdateState& us);

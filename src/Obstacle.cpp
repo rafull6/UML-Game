@@ -28,14 +28,22 @@ void Obstacle::_update(const UpdateState& us)
     //nothing to do
 }
 
-void Obstacle::explode()
+void Obstacle::hit(int damage)
 {
-    //hit by rocket
-    _hp--;
-    if (_hp == 0)
-    {
-        //dead, hide it with alpha tween
-        _dead = true;
-        _view->addTween(Actor::TweenAlpha(0), 300)->setDetachActor(true);
-    }
+	//hit by rocket
+	_hp-=damage;
+	if (_hp <= 0)
+	{
+		_die();
+	}
+}
+
+void Obstacle::_die()
+{
+
+
+	//dead, hide it with alpha tween
+	_dead = true;
+	_view->addTween(Actor::TweenAlpha(0), 300)->setDetachActor(true);
+
 }

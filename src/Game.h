@@ -7,6 +7,7 @@ DECLARE_SMART(Player, spPlayer);
 DECLARE_SMART(Game, spGame);
 DECLARE_SMART(Rocket, spRocket);
 DECLARE_SMART(Unit, spUnit);
+DECLARE_SMART(Pickup, spPickup);
 
 class Game: public Actor
 {
@@ -20,6 +21,7 @@ protected:
     friend class Rocket;
     friend class Player;
     friend class Unit;
+	friend class Pickup;
 
     void doUpdate(const UpdateState& us);
 

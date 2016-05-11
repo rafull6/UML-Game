@@ -6,10 +6,12 @@ class Obstacle: public Unit
 {
 public:
 
-    void explode();
+    void hit(int damage);
 
 private:
     void _init();
     void _update(const UpdateState& us);
     int _hp;
+	void _die();
+	
 };

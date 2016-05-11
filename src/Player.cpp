@@ -134,14 +134,75 @@ void Player::_loadKeys()
 
 }
 
-void Player::hit()
+void Player::hit(int damage)
 {
 	//hit by rocket
-	_hp--;
-	if (_hp == 0)
+	_hp -= damage;
+	log::message("Rocket hit %s hp left: %d\n", _playerName.c_str(),_hp);
+	if (_hp <= 0)
 	{
+		_die();
+	}
+}
+
+void Player::pickup_wpn(int id)
+{
+	//hit by rocket
+	switch (id)
+	{
+		case 0:
+		{
+			//equip wpn 0
+			_hp--;
+			break;
+		}
+		case 1:
+		{
+			//equip wpn 1
+			_hp++;
+			break;
+		}
+		default:
+		{
+			//equip default wpn;
+
+		}
+	}
+	log::message("%s pickup a gun! hp left: %d\n", _playerName.c_str(), _hp);
+}
+
+void Player::pickup_pup(int id)
+{
+	switch (id)
+	{
+	case 0:
+	{
+		//equip pup 0
+		_hp++;
+		break;
+	}
+	case 1:
+	{
+		//equip pup 1
+		_hp--;
+		break;
+	}
+	default:
+	{
+		//equip default pup;
+
+	}
+	
+	}
+	log::message("%s pickup a powerup! hp left: %d\n", _playerName.c_str(), _hp);
+}
+
+void Player::_die()
+{
+
+	
 		//dead, hide it with alpha tween
 		_dead = true;
 		_view->addTween(Actor::TweenAlpha(0), 300)->setDetachActor(true);
-	}
+	
 }
