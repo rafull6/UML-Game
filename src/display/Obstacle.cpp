@@ -1,13 +1,12 @@
 #include "Obstacle.h"
-#include "resources.h"
+#include "../resource/GameResource.h"
 
-void Obstacle::_init()
-{
+void Obstacle::_init(){
     //you could hit obstacle 3 times
     _hp = 3;
 
     spSprite sprite = new Sprite;
-    sprite->setResAnim(resources::ui.getResAnim("shield"));
+    sprite->setResAnim(GameResource::ui.getResAnim("shield"));
     sprite->attachTo(_view);
     sprite->setAnchor(Vector2(0.5f, 0.5f));
 
@@ -23,27 +22,20 @@ void Obstacle::_init()
     sprite->addTween(Sprite::TweenRotation(dest), rand() % 12000 + 10000, -1);
 }
 
-void Obstacle::_update(const UpdateState& us)
-{
+void Obstacle::_update(const UpdateState& us){
     //nothing to do
 }
 
-void Obstacle::hit(int damage)
-{
+void Obstacle::hit(int damage){
 	//hit by rocket
 	_hp-=damage;
-	if (_hp <= 0)
-	{
+	if (_hp <= 0){
 		_die();
 	}
 }
 
-void Obstacle::_die()
-{
-
-
+void Obstacle::_die(){
 	//dead, hide it with alpha tween
 	_dead = true;
 	_view->addTween(Actor::TweenAlpha(0), 300)->setDetachActor(true);
-
 }

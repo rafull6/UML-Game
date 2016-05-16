@@ -13,90 +13,102 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\core">
+      <UniqueIdentifier>{799fe18f-7038-49b4-9f62-af80c09872c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\display">
+      <UniqueIdentifier>{7c902d5b-cdd4-413d-846a-a1f20dbaf41a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\core">
+      <UniqueIdentifier>{548c7947-ce4a-409c-bcd7-cb455085c464}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\display">
+      <UniqueIdentifier>{8081fd3a-4495-4628-a055-d0091f80983e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\resource">
+      <UniqueIdentifier>{bebe4b21-9d8e-4b5f-8d69-2732445bf235}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\resource">
+      <UniqueIdentifier>{3f5fbb42-06e2-4eeb-8496-994d9cfc00f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\state">
+      <UniqueIdentifier>{5cbb2d84-51e5-4077-bd29-adf738095229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\state">
+      <UniqueIdentifier>{837bb4b9-249a-4870-85da-7832641aa478}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\aircraft.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GameButton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GameMenu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GameScene.cpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="..\src\core\Game.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resource\GameResource.h">
+      <Filter>Header Files\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\display\AircraftFighter.h">
+      <Filter>Header Files\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\state\FightState.h">
+      <Filter>Header Files\state</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\state\MenuState.h">
+      <Filter>Header Files\state</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\state\State.h">
+      <Filter>Header Files\state</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\display\FightStage.h">
+      <Filter>Header Files\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\display\Rocket.h">
+      <Filter>Header Files\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\display\Unit.h">
+      <Filter>Header Files\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\display\Obstacle.h">
+      <Filter>Header Files\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\display\Pickup.h">
+      <Filter>Header Files\display</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\core\Game.cpp">
+      <Filter>Source Files\core</Filter>
     </ClCompile>
     <ClCompile Include="..\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\MainMenuScene.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\src\resource\GameResource.cpp">
+      <Filter>Source Files\resource</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Obstacle.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\src\state\FightState.cpp">
+      <Filter>Source Files\state</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Player.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\src\state\MenuState.cpp">
+      <Filter>Source Files\state</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\resources.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\src\state\State.cpp">
+      <Filter>Source Files\state</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Rocket.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\src\display\FightStage.cpp">
+      <Filter>Source Files\display</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Scene.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\src\display\AircraftFighter.cpp">
+      <Filter>Source Files\display</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Unit.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\src\display\Rocket.cpp">
+      <Filter>Source Files\display</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Pickup.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\src\display\Unit.cpp">
+      <Filter>Source Files\display</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\src\aircraft.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\GameButton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\GameMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\GameScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\MainMenuScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Obstacle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\resources.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Rocket.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Unit.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Pickup.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClCompile Include="..\src\display\Obstacle.cpp">
+      <Filter>Source Files\display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\display\Pickup.cpp">
+      <Filter>Source Files\display</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
