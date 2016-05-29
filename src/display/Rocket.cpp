@@ -1,17 +1,16 @@
 #include "Rocket.h"
-#include "resources.h"
-#include "Game.h"
-#include "Obstacle.h"
-#include "Player.h"
-Rocket::Rocket(const Vector2& dir, std::string senderName): _dir(dir),_senderName(senderName)
-{
+#include "../resource/GameResource.h"
+#include "FightStage.h"
+//#include "Obstacle.h"
+#include "AircraftFighter.h"
+
+Rocket::Rocket(const Vector2& dir, std::string senderName): _dir(dir),_senderName(senderName){
 }
 
-void Rocket::_init()
-{
+void Rocket::_init(){
     //initialize rocket's sprite
     spSprite sp = new Sprite;
-    sp->setResAnim(resources::ui.getResAnim("rocket"));
+    sp->setResAnim(GameResource::ui.getResAnim("rocket"));
     sp->setAnchor(Vector2(0.5f, 0.5f));
     sp->setScale(0);
     sp->addTween(Sprite::TweenScale(1.0f), 500);
@@ -20,15 +19,14 @@ void Rocket::_init()
     _view->setRotation(atan2f(_dir.y, _dir.x));
 }
 
-void Rocket::_update(const UpdateState& us)
-{
+void Rocket::_update(const UpdateState& us){
 	//move rocket by it's direction each frame
 	Vector2 pos = _view->getPosition();
-	pos += _dir * (us.dt / 10000.0f) * 500.0f;
+	pos += _dir * (us.dt / 1000.0f) * 500.0f;
 	_view->setPosition(pos);
 
 	//find intersection with Enemies and explode them
-	for (Game::units::iterator i = _game->_units.begin(); i != _game->_units.end(); ++i)
+	/*for (Game::units::iterator i = _game->_units.begin(); i != _game->_units.end(); ++i)
 	{
 		spUnit unit = *i;
 		//list of units has everything, but we need only Enemies
@@ -65,18 +63,16 @@ void Rocket::_update(const UpdateState& us)
 		}
 		else
 			continue;
-	}
+	}*/
 
     //if rocked out of bounds then explode it
-    RectF bounds(0, 0, _game->getWidth(), _game->getHeight());
-    if (!bounds.pointIn(pos))
-    {
+    RectF bounds(0, 0, getStage()->getWidth(), getStage()->getHeight());
+    if (!bounds.pointIn(pos)){
         explode();
     }
 }
 
-void Rocket::explode()
-{
+void Rocket::explode(){
     //we are dead
     //set this flag to true and it this rocket would be removed from units list in Game::doUpdate
     _dead = true;
@@ -89,7 +85,7 @@ void Rocket::explode()
     anim->setAnchor(Vector2(0.5f, 0.5f));
 
     //run tween with explosion animation
-    spTween tween = anim->addTween(Sprite::TweenAnim(resources::ui.getResAnim("explosion")), 200);
+    spTween tween = anim->addTween(Sprite::TweenAnim(GameResource::ui.getResAnim("explosion")), 200);
     //auto detach sprite when tween is done
     tween->setDetachActor(true);
 
