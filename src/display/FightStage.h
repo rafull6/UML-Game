@@ -1,4 +1,3 @@
-#pragma once
 #include "oxygine-framework.h"
 #include "AircraftFighter.h"
 #include <list>

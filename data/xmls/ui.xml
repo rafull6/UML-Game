@@ -9,6 +9,18 @@
 		<image file="menu.png" />
 		<image file="box9.png" />
 		<image file="bg.jpg" />
+		<image file="auth_h.png" />
+		<image file="auth_n.png" />
+		<image file="exit_h.png" />
+		<image file="exit_n.png" />
+		<image file="git_h.png" />
+		<image file="git_n.png" />
+		<image file="play_h.png" />
+		<image file="play_n.png" />
+		<image file="set_h.png" />
+		<image file="set_n.png" />
+		<image file="menu-bg.png" />
+		<image file="logotype.png" />
 		<image file="buttons.png" rows="5" cols="2"/>
 	</atlas>
 
@@ -19,7 +31,7 @@
 	<set path = "../images" />
 	<atlas>
 		<image file="sky.jpg" />
-		<image file="ship-red.png" />
+		<image file="ship.png" />
 		<image file="shipengine.png" />
 		<image file="rocket.png" />
 		<image file="explosion.png" cols="12"/>

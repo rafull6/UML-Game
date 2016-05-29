@@ -1,9 +1,3 @@
-/**
-Attention!
-This file initializes the Oxygine engine.
-If you just started here and don't understand the code completely, feel free to come back later.
-You can start from aircraft.cpp and aircraft.h, which main functions are called from here.
-*/
 #include "core/oxygine.h"
 #include "core/Game.h"
 #include "Stage.h"
@@ -54,8 +48,8 @@ void run(){
 
 #if OXYGINE_SDL || OXYGINE_EMSCRIPTEN
 	// The initial window size can be set up here on SDL builds
-	desc.w = 640;
-	desc.h = 520;
+	desc.w = 960;
+	desc.h = 640;
 	desc.fullscreen = false;
 	// Marmalade settings can be modified from the emulator's menu
 #endif

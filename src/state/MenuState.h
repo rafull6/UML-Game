@@ -1,14 +1,12 @@
-#pragma once
-#include "oxygine-framework.h"
 #include "State.h"
 
-using namespace oxygine;
-
-DECLARE_SMART(MenuStage, spMenuStage);
+DECLARE_SMART(MenuState, spMenuState);
 
 class MenuState : public State{
-private:
-
 public:
+	static spMenuState instance;
 	MenuState();
+
+private:
+	void onEvent(Event* ev);
 };

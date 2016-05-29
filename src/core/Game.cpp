@@ -2,6 +2,7 @@
 #include "oxygine-framework.h"
 #include "../resource/GameResource.h"
 #include "../state/FightState.h"
+#include "../state/MenuState.h"
 
 using namespace oxygine;
 
@@ -13,13 +14,16 @@ Game::~Game(){
 }
 
 void Game::init() {
+
+	//Loading resources
 	GameResource::load();
 
-	// create all states
+	// create gaming state
 	FightState::instance = new FightState();
-
-	// open state
-	FightState::instance->show();
+	// create menu state 
+	MenuState::instance = new MenuState();
+	// open state (starts from menu)
+	MenuState::instance->show();
 }
 
 void Game::preinit() {
