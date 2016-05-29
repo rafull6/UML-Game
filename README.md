@@ -30,4 +30,5 @@ Instrukcja uzyskania aplikacji w wersji "release":
 3. W folderze tym znajdują się wszystkie pliki wymagane do uruchomienia gry.
 
 Informacja:
+
 Dane na branchach 'audio' oraz 'vlad-gui' nie są w ostatecznej formie, dlatego nie są zmergowane z masterem.
