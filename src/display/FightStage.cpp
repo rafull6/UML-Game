@@ -18,13 +18,17 @@ void FightStage::init() {
 	this->_bg->setResAnim(GameResource::ui.getResAnim("sky"));
 	this->_bg->attachTo(this);
 
-	spPickup pickup_pup0 = new Pickup("pup", 0);
+	spPickup pickup_pup0 = new Pickup("pup", 0, 5, 20);
 	pickup_pup0->init(Vector2(scalar::randFloat(0, getWidth()), scalar::randFloat(0, getHeight())), 0, this);
-	spPickup pickup_pup1 = new Pickup("pup", 1);
+	spPickup pickup_pup1 = new Pickup("pup", 1, 5, 20);
 	pickup_pup1->init(Vector2(scalar::randFloat(0, getWidth()), scalar::randFloat(0, getHeight())), 0, this);
-	spPickup pickup_wpn0 = new Pickup("wpn", 0);
+	spPickup pickup_pup2 = new Pickup("pup", 2, -1, 76);
+	pickup_pup2->init(Vector2(scalar::randFloat(0, getWidth()), scalar::randFloat(0, getHeight())), 0, this);
+	spPickup pickup_pup3 = new Pickup("pup", 3, -1, 76);
+	pickup_pup3->init(Vector2(scalar::randFloat(0, getWidth()), scalar::randFloat(0, getHeight())), 0, this);
+	spPickup pickup_wpn0 = new Pickup("wpn", 0, 5, 20);
 	pickup_wpn0->init(Vector2(scalar::randFloat(0, getWidth()), scalar::randFloat(0, getHeight())), 0, this);
-	spPickup pickup_wpn1 = new Pickup("wpn", 1);
+	spPickup pickup_wpn1 = new Pickup("wpn", 1, 5, 20);
 	pickup_wpn1->init(Vector2(scalar::randFloat(0, getWidth()), scalar::randFloat(0, getHeight())), 0, this);
 
 

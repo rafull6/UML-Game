@@ -30,6 +30,8 @@
 	<atlas>
 		<image file="pup-0.png" />
 		<image file="pup-1.png" />
+		<image file="pup-2.png" />
+		<image file="pup-3.png" />
 	</atlas>
 	
 	<set path = "../images/weapons" />
