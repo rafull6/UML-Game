@@ -18,11 +18,15 @@ Skład zespołu:
 - Vlad Udovychenko
 
 Link do aplikacji w wersji "release":
+
 https://db.tt/xdfSKl5r (zawiera dane z brancha 'clouds')
 
 Instrukcja uzyskania aplikacji w wersji "release":
+
 1. Skompilować cały projekt (Build Solution) wybierając opcję "Release" z Solution Configurations.
+
 2. Wygenerowany plik aircraft.exe z folderu 'proj.win32\Release_v140' przekopiować do folderu 'data'.
+
 3. W folderze tym znajdują się wszystkie pliki wymagane do uruchomienia gry.
 
 Informacja:
