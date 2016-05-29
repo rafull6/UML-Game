@@ -29,6 +29,14 @@ Instrukcja uzyskania aplikacji w wersji "release":
 
 3. W folderze tym znajdują się wszystkie pliki wymagane do uruchomienia gry.
 
+Do poprawnego skompilowania projektu wymagane jest posiadanie frameworku Oxygine w wersji podanej poniżej:
+
+https://dl.dropboxusercontent.com/u/70268100/oxygine-framework-with-sdl.zip
+
+Repozytorium ('UML-Game') należy umieścić w folderze 'oxygine-framework-with-sdl'
+
+
+
 Informacja:
 
 Dane na branchach 'audio' oraz 'vlad-gui' nie są w ostatecznej formie, dlatego nie są zmergowane z masterem.
