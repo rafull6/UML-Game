@@ -27,7 +27,6 @@ void FightStage::init() {
 	spPickup pickup_wpn1 = new Pickup("wpn", 1);
 	pickup_wpn1->init(Vector2(scalar::randFloat(0, getWidth()), scalar::randFloat(0, getHeight())), 0, this);
 
-
 	// create aircrafts
 	this->_af1 = new AircraftFighter();
 	this->_af1->init(Vector2(0,0), 180, this);
@@ -64,7 +63,6 @@ void FightStage::onEvent(Event* ev) {
 			break;
 		default:
 			log::messageln("other key pressed");
-			//this->_af1->move(ke->data->keysym.scancode);
 			break;
 		}
 	}

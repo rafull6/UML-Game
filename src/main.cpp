@@ -13,15 +13,12 @@ int mainloop(){
 	// It gets passed to our aircraft game implementation
 	game->update();
 
-	// Update our stage
-	// Update all actors. Actor::update will also be called for all its children
 	getStage()->update();
 
 	if (core::beginRendering())
 	{
 		Color clearColor(32, 32, 32, 255);
 		Rect viewport(Point(0, 0), core::getDisplaySize());
-		// Render all actors inside the stage. Actor::render will also be called for all its children
 		getStage()->render(clearColor, viewport);
 
 		core::swapDisplayBuffers();
@@ -42,30 +39,24 @@ void run(){
 	// create main object
 	game = new Game("Aircraft Fighter");
 
-	// Initialize Oxygine's internal stuff
 	core::init_desc desc;
 	desc.title = game->getTitle();
 
 #if OXYGINE_SDL || OXYGINE_EMSCRIPTEN
-	// The initial window size can be set up here on SDL builds
 	desc.w = 960;
 	desc.h = 640;
 	desc.fullscreen = false;
-	// Marmalade settings can be modified from the emulator's menu
 #endif
 
 	game->preinit();
 	core::init(&desc);
 
-	// Create the stage. Stage is a root node for all updateable and drawable objects
 	Stage::instance = new Stage(true);
 	Point size = core::getDisplaySize();
 	getStage()->setSize(size);
 
-	// Set window icon
 	game->setWindowIcon("icon.bmp");
 
-	// DebugActor is a helper actor node. It shows FPS, memory usage and other useful stuff
 	DebugActor::show();
 
 	// Initializes our game. See game.cpp
@@ -92,13 +83,6 @@ void run(){
 	We dump and log all our created objects that have not been freed yet
 	*/
 	ObjectBase::dumpCreatedObjects();
-
-	/*
-	Let's clean up everything right now and call ObjectBase::dumpObjects() again.
-	We need to free all allocated resources and delete all created actors.
-	All actors/sprites are smart-pointer objects and don't need to be removed by hand.
-	But now we want to delete it by hand.
-	*/
 
 	// See aircraft.cpp for the shutdown function implementation
 	game->destroy();
