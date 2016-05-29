@@ -20,7 +20,8 @@ MenuState::MenuState()
 	spSprite logo = initActor(new Sprite,
 		arg_resAnim = GameResource::ui.getResAnim("logotype"),
 		arg_attachTo = _view);
-	logo->setPosition(_view->getSize() - logo->getSize());
+	logo->setX(_view->getWidth() - logo->getWidth() - 20);
+	logo->setY(_view->getHeight() - (_view->getHeight() - logo->getHeight()/4));
 
 	//create menu block
 	spSprite menu_bg = initActor(new Sprite,
@@ -31,45 +32,61 @@ MenuState::MenuState()
 	menu_bg->setY((_view->getHeight() / 2) + 80);
 
 	//create play button
-	spSprite play_n = initActor(new mButton,
+	spSprite playBtn = initActor(new mButton,
 		arg_name = "play-normal",
 		arg_resAnim = GameResource::ui.getResAnim("play_n"),
 		arg_anchor = Vector2(0.5f, 0.5f),
 		arg_attachTo = menu_bg);
 
-	play_n->setX(menu_bg->getWidth() / 2);
-	play_n->setY(menu_bg->getHeight() - (menu_bg->getHeight() - play_n->getHeight()*2));
+	playBtn->setX(menu_bg->getWidth() / 2);
+	playBtn->setY(menu_bg->getHeight() - (menu_bg->getHeight() - playBtn->getHeight()*2));
 
 	//create settings button
-	spSprite set_n = initActor(new mButton,
+	spSprite setBtn = initActor(new mButton,
 		arg_name = "set-normal",
 		arg_resAnim = GameResource::ui.getResAnim("set_n"),
 		arg_anchor = Vector2(0.5f, 0.5f),
 		arg_attachTo = menu_bg);
-
-	set_n->setX(menu_bg->getWidth() / 2);
-	set_n->setY(menu_bg->getHeight() - (menu_bg->getHeight() - set_n->getHeight() * 3 - 10));
+	setBtn->setX(menu_bg->getWidth() / 2);
+	setBtn->setY(playBtn->getY()+ setBtn->getHeight()+10);
 
 	//create git button
-	spSprite git_n = initActor(new mButton,
+	spSprite gitBtn = initActor(new mButton,
 		arg_name = "git-normal",
 		arg_resAnim = GameResource::ui.getResAnim("git_n"),
 		arg_anchor = Vector2(0.5f, 0.5f),
 		arg_attachTo = menu_bg);
+	gitBtn->setX(menu_bg->getWidth() / 2);
+	gitBtn->setY(setBtn->getY() + gitBtn->getHeight() + 10);
 
-	git_n->setX(menu_bg->getWidth() / 2);
-	git_n->setY(menu_bg->getHeight() - (menu_bg->getHeight() - git_n->getHeight() * 4 - 10));
+	//create auth button
+	spSprite authBtn = initActor(new mButton,
+		arg_name = "auth-normal",
+		arg_resAnim = GameResource::ui.getResAnim("auth_n"),
+		arg_anchor = Vector2(0.5f, 0.5f),
+		arg_attachTo = menu_bg);
+	authBtn->setX(menu_bg->getWidth() / 2);
+	authBtn->setY(gitBtn->getY() + authBtn->getHeight() + 10);
+
+	//create auth button
+	spSprite exitBtn = initActor(new mButton,
+		arg_name = "exit-normal",
+		arg_resAnim = GameResource::ui.getResAnim("exit_n"),
+		arg_anchor = Vector2(0.5f, 0.5f),
+		arg_attachTo = menu_bg);
+	exitBtn->setX(menu_bg->getWidth() / 2);
+	exitBtn->setY(authBtn->getY() + exitBtn->getHeight() + 10);
 }
 
 void MenuState::onEvent(Event* ev)
 {
 	string id = ev->currentTarget->getName();
-	if (id == "exit")
+	if (id == "exit-normal")
 	{
 		core::requestQuit();
 	}
 
-	if (id == "play")
+	if (id == "play-normal")
 	{
 		//clicked to play button change scene
 		changeState(FightState::instance);
