@@ -12,14 +12,6 @@ public:
 	static spMenuState instance;
 	MenuState();
 
-	void _addTween(spTween tween)
-	{
-		tween->setEase(_ease);
-		_sprite->addTween(tween);
-	}
-	int dur = 2000;
-	//_addTween(createTween(Actor::TweenRotation(_sprite->getRotation() + (float)MATH_PI * 2), dur, 1));
-
 private:
 	void onEvent(Event* ev);
 

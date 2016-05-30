@@ -77,18 +77,17 @@ MenuState::MenuState()
 	exitBtn->setX(menu_bg->getWidth() / 2);
 	exitBtn->setY(authBtn->getY() + exitBtn->getHeight() + 10);
 	
-	spSprite _sprite = new Sprite();
+	/*spSprite _sprite = new Sprite();
 	_sprite->attachTo(_view);
 	_sprite->setAnchor(0.5f, 0.5f);
 	_sprite->setResAnim(GameResource::ui.getResAnim("engines"));
-	//_sprite->setPosition(_view->getWidth() / 2.0f, _view->getHeight() / 2);
 
 	_sprite->setX(_view->getWidth() / 2 - 117);
 	_sprite->setY(_view->getHeight() / 2 - 185);
 	
 	int dur = 2000;
 	_addTween(createTween(TweenAnim(GameResource::ui.getResAnim("anim")), dur / 4, 10));
-
+*/
 }
 
 void MenuState::onEvent(Event* ev)

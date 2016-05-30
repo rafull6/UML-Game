@@ -21,6 +21,7 @@
 		<image file="set_n.png" />
 		<image file="menu-bg.png" />
 		<image file="logotype.png" />
+		<image file="engines.jpg" />
 		<image file="buttons.png" rows="5" cols="2"/>
 	</atlas>
 
