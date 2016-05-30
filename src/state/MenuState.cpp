@@ -9,8 +9,7 @@ using namespace std;
 
 spMenuState MenuState::instance;
 
-MenuState::MenuState()
-{
+MenuState::MenuState(){
 	//create background
 	spSprite sky = new Sprite;
 	sky->setResAnim(GameResource::ui.getResAnim("bg"));
@@ -77,29 +76,31 @@ MenuState::MenuState()
 	exitBtn->setX(menu_bg->getWidth() / 2);
 	exitBtn->setY(authBtn->getY() + exitBtn->getHeight() + 10);
 	
-	/*spSprite _sprite = new Sprite();
+	spSprite _sprite = new Sprite();
 	_sprite->attachTo(_view);
 	_sprite->setAnchor(0.5f, 0.5f);
 	_sprite->setResAnim(GameResource::ui.getResAnim("engines"));
+	_sprite->setPosition(_view->getWidth() / 2.0f, _view->getHeight() / 2);
 
 	_sprite->setX(_view->getWidth() / 2 - 117);
 	_sprite->setY(_view->getHeight() / 2 - 185);
 	
-	int dur = 2000;
-	_addTween(createTween(TweenAnim(GameResource::ui.getResAnim("anim")), dur / 4, 10));
-*/
+	//int dur = 2000;
+	//_addTween(createTween(TweenAnim(GameResource::ui.getResAnim("anim")), dur / 4, 10));
+	
+	// add events to menu
+	menu_bg->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MenuState::onEvent));
 }
 
-void MenuState::onEvent(Event* ev)
-{
-	//string id = ev->currentTarget->getName();
-	if (ev->currentTarget->getName() == "exit-normal")
-	{
+void MenuState::onEvent(Event* ev){
+	const std::string target = ev->target->getName();
+	
+	// exit app
+	if (target == "exit-normal"){
 		core::requestQuit();
 	}
 
-	if (ev->currentTarget->getName() == "play-normal")
-	{
+	if (target == "play-normal"){
 		log::messageln("mode changed");
 		//clicked to play button change scene
 		changeState(FightState::instance);
