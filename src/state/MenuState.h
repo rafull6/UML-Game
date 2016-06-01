@@ -7,6 +7,7 @@ DECLARE_SMART(MenuState, spMenuState);
 class MenuState : public State{
 private:
 	spSprite     _mainMenu;
+	spSprite     _playerSettings;
 
 	//animation special effects
 	spSprite     _enginesAnimation;

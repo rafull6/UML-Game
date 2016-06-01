@@ -2,12 +2,9 @@
 <resources>
 	<set path = "../images/ui" />
 	<atlas>
-		<image file="joystick.png" />
-		<image file="finger.png" />
-		<image file="play.png" />
-		<image file="logo2.png" />
+		<image file="btnn.png" />
+		<image file="btnh.png" />
 		<image file="menu.png" />
-		<image file="box9.png" />
 		<image file="bg.jpg" />
 		<image file="auth_h.png" />
 		<image file="auth_n.png" />
@@ -19,10 +16,17 @@
 		<image file="play_n.png" />
 		<image file="set_h.png" />
 		<image file="set_n.png" />
-		<image file="menu-bg.png" />
 		<image file="logotype.png" />
-		<image file="engines.jpg" />
-		<image file="buttons.png" rows="5" cols="2"/>
+		<image id="engines-fire" file="engines-fire.png" cols="15"/>
+		<image file="menu-bg.png" />
+		<image file="fire_bottom_anim.png" />
+		<image file="sparks_top_anim.png" />
+		<image file="left_bottom_smoke_anim.png"/>
+		<image file="small_btn.png" />
+		<image file="cancel_btn.png" />
+		<image file="input_short.png" />
+		<image file="input_long.png" />
+		<image file="set_bg.png" />
 	</atlas>
 
 	<set path = "fonts" />

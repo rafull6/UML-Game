@@ -32,6 +32,14 @@ MenuState::MenuState(){
 	_mainMenu->setX(_view->getWidth() / 2);
 	_mainMenu->setY((_view->getHeight() / 2) + 80);
 
+	//create settings block
+	_playerSettings = initActor(new Sprite,
+		arg_resAnim = GameResource::ui.getResAnim("set_bg"),
+		arg_anchor = Vector2(0.5f, 0.5f),
+		arg_attachTo = _view);
+	_playerSettings->setX(_view->getWidth() / 2);
+	_playerSettings->setY((_view->getHeight() / 2) + 80);
+
 	
 	this->_initEngineEffects();
 	this->_initFireBottomEffects();
@@ -99,7 +107,7 @@ void MenuState::_initMenu() {
 
 void MenuState::_initSettings(const std::string& playerName1, const std::string &playerName2) {
 	spActor settingsParent = new Actor();
-	settingsParent->setSize(_mainMenu->getWidth(), _mainMenu->getHeight());
+	settingsParent->setSize(_playerSettings->getWidth(), _playerSettings->getHeight());
 
 	_input = new InputText();
 	_input->addEventListener(Event::COMPLETE, CLOSURE(this, &MenuState::onComplete));
@@ -117,8 +125,9 @@ void MenuState::_initSettings(const std::string& playerName1, const std::string 
 	playerNameInput->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MenuState::onClickTF));
 
 	settingsParent->setName("settings");
-	settingsParent->attachTo(_mainMenu);
+	settingsParent->attachTo(_playerSettings);
 	settingsParent->setAlpha(0);
+	_playerSettings->setAlpha(0);
 };
 
 void MenuState::_initEngineEffects() {
@@ -131,7 +140,6 @@ void MenuState::_initEngineEffects() {
 	_enginesAnimation->setX(_view->getWidth() / 2 - 160);
 	_enginesAnimation->setY(_view->getHeight() / 2 - 213);
 
-	//_mainStateEffectsTween = _enginesAnimation->addTween(Actor::TweenAlpha(0), 1000, 0);
 	_mainStateEffectsTween = _enginesAnimation->addTween(TweenAnim(GameResource::ui.getResAnim("engines-fire")), 700, 0);
 	log::messageln("show main state Engine effects");
 }
@@ -142,7 +150,7 @@ void MenuState::_initFireBottomEffects() {
 	_fireBottomAnimation->setAnchor(0.5f, 0.5f);
 	_fireBottomAnimation->setResAnim(GameResource::ui.getResAnim("fire_bottom_anim"));
 
-	//engines animation initial position
+	//fire animation initial position
 	_fireBottomAnimation->setX(_view->getWidth() - _fireBottomAnimation->getWidth() / 3);
 	_fireBottomAnimation->setY(_view->getHeight() / 2 + _fireBottomAnimation->getHeight() / 3 + 50);
 
@@ -156,7 +164,7 @@ void MenuState::_initSmokeBottomEffects() {
 	_smokeLeftBottomAnimation->setAnchor(0.5f, 0.5f);
 	_smokeLeftBottomAnimation->setResAnim(GameResource::ui.getResAnim("left_bottom_smoke_anim"));
 
-	//engines animation initial position
+	//smoke animation initial position
 	_smokeLeftBottomAnimation->setX(_view->getWidth() - _view->getWidth() + _smokeLeftBottomAnimation->getWidth()-180);
 	_smokeLeftBottomAnimation->setY(_view->getHeight() / 2 + 115);
 	_smokeLeftBottomAnimation->setAlpha(10);
@@ -172,7 +180,7 @@ void MenuState::_initSparksTopEffects() {
 	_sparksTopRightAnimation->setResAnim(GameResource::ui.getResAnim("sparks_top_anim"));
 	_sparksTopRightAnimation->setAlpha(200);
 
-	//engines animation initial position
+	//sparks animation initial position
 	_sparksTopRightAnimation->setX(_view->getWidth());
 	_sparksTopRightAnimation->setY(_view->getHeight() - (_view->getHeight() /4)*3);
 
@@ -193,7 +201,7 @@ void MenuState::onEvent(Event* ev) {
 		changeState(FightState::instance);
 	}
 	else if (target == "set-normal") {
-		_mainMenuTween = _mainMenu->addTween(Actor::TweenY(-300), 300);
+		_mainMenuTween = _mainMenu->addTween(Actor::TweenY(-300), 400);
 		_mainMenuTween->setName("open-settings");
 		_mainMenuTween->setDoneCallback(CLOSURE(this, &MenuState::onTweenDone));
 		log::messageln("show settings");
@@ -228,9 +236,10 @@ void MenuState::onTweenDone(Event* ev) {
 	log::messageln("%s", ev->target->getName().c_str());
 	//if (ev->currentTarget->getName() == "open-settings"){
 	_mainMenu->getChild("menuClip")->setAlpha(0);
-	_mainMenu->getChild("settings")->setAlpha(255);
-		
-	_mainMenu->addTween(Actor::TweenY((_view->getHeight() / 2) + 80), 300, 1, false, 500);
+	_mainMenu->setAlpha(0);
+	_playerSettings->getChild("settingsParent")->setAlpha(255);
+	_playerSettings->setAlpha(255);
+	//_mainMenu->addTween(Actor::TweenY((_view->getHeight() / 2) + 80), 300, 1, false, 500);
 	//}
 }
 
