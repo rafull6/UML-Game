@@ -3,15 +3,16 @@
 #include "initActor.h"
 #include "../resource/GameResource.h"
 #include "../display/mButton.h"
+#include "../core/Config.h"
 #include "FightState.h"
 
 using namespace std;
 
 spMenuState MenuState::instance;
 
-MenuState::MenuState()
-{
-	//create background
+MenuState::MenuState(){
+
+	//create main state background
 	spSprite sky = new Sprite;
 	sky->setResAnim(GameResource::ui.getResAnim("bg"));
 	sky->attachTo(_view);
@@ -24,39 +25,57 @@ MenuState::MenuState()
 	logo->setY(_view->getHeight() - (_view->getHeight() - logo->getHeight()/4));
 
 	//create menu block
-	spSprite menu_bg = initActor(new Sprite,
+	_mainMenu = initActor(new Sprite,
 		arg_resAnim = GameResource::ui.getResAnim("menu-bg"),
 		arg_anchor = Vector2(0.5f, 0.5f),
 		arg_attachTo = _view);
-	menu_bg->setX(_view->getWidth() / 2);
-	menu_bg->setY((_view->getHeight() / 2) + 80);
+	_mainMenu->setX(_view->getWidth() / 2);
+	_mainMenu->setY((_view->getHeight() / 2) + 80);
+
+	
+	this->_initEngineEffects();
+	this->_initFireBottomEffects();
+	this->_initSmokeBottomEffects();
+	this->_initSparksTopEffects();
+	this->_initSettings(Config::getInstance().getPlayerName(0), Config::getInstance().getPlayerName(1));
+	this->_initMenu();
+	
+	// add events to menu
+	_mainMenu->setName("Main Menu");
+	_mainMenu->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MenuState::onEvent));
+}
+
+void MenuState::_initMenu() {
+	spActor menuClip = new Actor();
+	menuClip->setSize(_mainMenu->getWidth(), _mainMenu->getHeight());
+	menuClip->attachTo(_mainMenu);
+	menuClip->setName("menuClip");
 
 	//create play button
 	spSprite playBtn = initActor(new mButton,
 		arg_name = "play-normal",
-		arg_resAnim = GameResource::ui.getResAnim("play_n"),
+		arg_resAnim = GameResource::ui.getResAnim("btnn"),
 		arg_anchor = Vector2(0.5f, 0.5f),
-		arg_attachTo = menu_bg);
-
-	playBtn->setX(menu_bg->getWidth() / 2);
-	playBtn->setY(menu_bg->getHeight() - (menu_bg->getHeight() - playBtn->getHeight()*2));
+		arg_attachTo = menuClip);
+		playBtn->setX(menuClip->getWidth() / 2);
+		playBtn->setY(menuClip->getHeight() - (menuClip->getHeight() - playBtn->getHeight() * 2));
 
 	//create settings button
 	spSprite setBtn = initActor(new mButton,
 		arg_name = "set-normal",
-		arg_resAnim = GameResource::ui.getResAnim("set_n"),
+		arg_resAnim = GameResource::ui.getResAnim("btnh"),
 		arg_anchor = Vector2(0.5f, 0.5f),
-		arg_attachTo = menu_bg);
-	setBtn->setX(menu_bg->getWidth() / 2);
-	setBtn->setY(playBtn->getY()+ setBtn->getHeight()+10);
+		arg_attachTo = menuClip);
+	setBtn->setX(menuClip->getWidth() / 2);
+	setBtn->setY(playBtn->getY() + setBtn->getHeight() + 10);
 
 	//create git button
 	spSprite gitBtn = initActor(new mButton,
 		arg_name = "git-normal",
 		arg_resAnim = GameResource::ui.getResAnim("git_n"),
 		arg_anchor = Vector2(0.5f, 0.5f),
-		arg_attachTo = menu_bg);
-	gitBtn->setX(menu_bg->getWidth() / 2);
+		arg_attachTo = menuClip);
+	gitBtn->setX(menuClip->getWidth() / 2);
 	gitBtn->setY(setBtn->getY() + gitBtn->getHeight() + 10);
 
 	//create auth button
@@ -64,8 +83,8 @@ MenuState::MenuState()
 		arg_name = "auth-normal",
 		arg_resAnim = GameResource::ui.getResAnim("auth_n"),
 		arg_anchor = Vector2(0.5f, 0.5f),
-		arg_attachTo = menu_bg);
-	authBtn->setX(menu_bg->getWidth() / 2);
+		arg_attachTo = menuClip);
+	authBtn->setX(menuClip->getWidth() / 2);
 	authBtn->setY(gitBtn->getY() + authBtn->getHeight() + 10);
 
 	//create auth button
@@ -73,41 +92,147 @@ MenuState::MenuState()
 		arg_name = "exit-normal",
 		arg_resAnim = GameResource::ui.getResAnim("exit_n"),
 		arg_anchor = Vector2(0.5f, 0.5f),
-		arg_attachTo = menu_bg);
-	exitBtn->setX(menu_bg->getWidth() / 2);
+		arg_attachTo = menuClip);
+	exitBtn->setX(menuClip->getWidth() / 2);
 	exitBtn->setY(authBtn->getY() + exitBtn->getHeight() + 10);
-	
-	spSprite _sprite = new Sprite();
-	_sprite->attachTo(_view);
-	_sprite->setAnchor(0.5f, 0.5f);
-	_sprite->setResAnim(GameResource::ui.getResAnim("engines"));
-	_sprite->setPosition(_view->getWidth() / 2.0f, _view->getHeight() / 2);
-
-	_sprite->setX(_view->getWidth() / 2 - 117);
-	_sprite->setY(_view->getHeight() / 2 - 185);
-	
-	int dur = 2000;
-	//_addTween(createTween(TweenAnim(GameResource::ui.getResAnim("anim")), dur / 4, 10));
-	
-		
-	// add events to menu
-	menu_bg->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MenuState::onEvent));
 }
 
-void MenuState::onEvent(Event* ev)
-{
+void MenuState::_initSettings(const std::string& playerName1, const std::string &playerName2) {
+	spActor settingsParent = new Actor();
+	settingsParent->setSize(_mainMenu->getWidth(), _mainMenu->getHeight());
+
+	_input = new InputText();
+	_input->addEventListener(Event::COMPLETE, CLOSURE(this, &MenuState::onComplete));
+
+	spTextField playerNameLabel = initActor(new TextField,
+		arg_attachTo = settingsParent,
+		arg_text = "Player 1:"
+	);
+
+	spInputField playerNameInput = new InputField(playerName1);
+	playerNameInput->setAnchor(Vector2(0.5f, 0.5f));
+	playerNameInput->setX(settingsParent->getWidth() / 2);
+	playerNameInput->setY(settingsParent->getHeight() - (settingsParent->getHeight() - playerNameInput->getHeight() * 2));
+	playerNameInput->attachTo(settingsParent);
+	playerNameInput->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MenuState::onClickTF));
+
+	settingsParent->setName("settings");
+	settingsParent->attachTo(_mainMenu);
+	settingsParent->setAlpha(0);
+};
+
+void MenuState::_initEngineEffects() {
+	_enginesAnimation = new Sprite();
+	_enginesAnimation->attachTo(_view);
+	_enginesAnimation->setAnchor(0.5f, 0.5f);
+	_enginesAnimation->setResAnim(GameResource::ui.getResAnim("engines-fire"));
+
+	//engines animation initial position
+	_enginesAnimation->setX(_view->getWidth() / 2 - 160);
+	_enginesAnimation->setY(_view->getHeight() / 2 - 213);
+
+	//_mainStateEffectsTween = _enginesAnimation->addTween(Actor::TweenAlpha(0), 1000, 0);
+	_mainStateEffectsTween = _enginesAnimation->addTween(TweenAnim(GameResource::ui.getResAnim("engines-fire")), 700, 0);
+	log::messageln("show main state Engine effects");
+}
+
+void MenuState::_initFireBottomEffects() {
+	_fireBottomAnimation = new Sprite();
+	_fireBottomAnimation->attachTo(_view);
+	_fireBottomAnimation->setAnchor(0.5f, 0.5f);
+	_fireBottomAnimation->setResAnim(GameResource::ui.getResAnim("fire_bottom_anim"));
+
+	//engines animation initial position
+	_fireBottomAnimation->setX(_view->getWidth() - _fireBottomAnimation->getWidth() / 3);
+	_fireBottomAnimation->setY(_view->getHeight() / 2 + _fireBottomAnimation->getHeight() / 3 + 50);
+
+	_mainStateEffectsTween = _fireBottomAnimation->addTween(Actor::TweenPosition(_fireBottomAnimation->getPosition() + Vector2(+350, 0)), 40000, 0, true);
+	log::messageln("show main state Fire bottom effects");
+}
+
+void MenuState::_initSmokeBottomEffects() {
+	_smokeLeftBottomAnimation = new Sprite();
+	_smokeLeftBottomAnimation->attachTo(_view);
+	_smokeLeftBottomAnimation->setAnchor(0.5f, 0.5f);
+	_smokeLeftBottomAnimation->setResAnim(GameResource::ui.getResAnim("left_bottom_smoke_anim"));
+
+	//engines animation initial position
+	_smokeLeftBottomAnimation->setX(_view->getWidth() - _view->getWidth() + _smokeLeftBottomAnimation->getWidth()-180);
+	_smokeLeftBottomAnimation->setY(_view->getHeight() / 2 + 115);
+	_smokeLeftBottomAnimation->setAlpha(10);
+
+	_mainStateEffectsTween = _smokeLeftBottomAnimation->addTween(Actor::TweenAlpha(200), 4000, 0, true);
+	log::messageln("show main state Smoke bottom effects");
+}
+
+void MenuState::_initSparksTopEffects() {
+	_sparksTopRightAnimation = new Sprite();
+	_sparksTopRightAnimation->attachTo(_view);
+	_sparksTopRightAnimation->setAnchor(0.5f, 0.5f);
+	_sparksTopRightAnimation->setResAnim(GameResource::ui.getResAnim("sparks_top_anim"));
+	_sparksTopRightAnimation->setAlpha(200);
+
+	//engines animation initial position
+	_sparksTopRightAnimation->setX(_view->getWidth());
+	_sparksTopRightAnimation->setY(_view->getHeight() - (_view->getHeight() /4)*3);
+
+	_mainStateEffectsTween = _sparksTopRightAnimation->addTween(Actor::TweenPosition(_sparksTopRightAnimation->getPosition() + Vector2(-350, 0)), 40000, 0, true);
+	log::messageln("show main state Smoke bottom effects");
+}
+
+void MenuState::onEvent(Event* ev) {
 	const std::string target = ev->target->getName();
 
-	//string id = ev->currentTarget->getName();
-	if (target == "exit-normal")
-	{
+	// exit app
+	if (target == "exit-normal") {
 		core::requestQuit();
 	}
-
-	if (target  == "play-normal")
-	{
+	else if (target == "play-normal") {
 		log::messageln("mode changed");
 		//clicked to play button change scene
 		changeState(FightState::instance);
 	}
+	else if (target == "set-normal") {
+		_mainMenuTween = _mainMenu->addTween(Actor::TweenY(-300), 300);
+		_mainMenuTween->setName("open-settings");
+		_mainMenuTween->setDoneCallback(CLOSURE(this, &MenuState::onTweenDone));
+		log::messageln("show settings");
+	}
+	else if (target == "auth-normal") {
+		
+	}
 }
+
+void MenuState::onClickTF(Event* ev) {
+	log::messageln("tf clicked");
+	if (_currentTF) {
+		_currentTF->setColor(Color::White);
+	}
+	_currentTF = safeSpCast<InputField>(ev->currentTarget);
+	_input->start(_currentTF->getText());
+	log::messageln("input start");
+	//_currentTF->setColor(Color::Red);
+};
+
+void MenuState::onComplete(Event * ev) {
+	if (_currentTF) {
+		_currentTF->setColor(Color::White);
+	}
+	_currentTF = 0;
+	InputText::stopAnyInput();
+};
+
+void MenuState::onTweenDone(Event* ev) {
+	log::message("tween done");
+
+	log::messageln("%s", ev->target->getName().c_str());
+	//if (ev->currentTarget->getName() == "open-settings"){
+	_mainMenu->getChild("menuClip")->setAlpha(0);
+	_mainMenu->getChild("settings")->setAlpha(255);
+		
+	_mainMenu->addTween(Actor::TweenY((_view->getHeight() / 2) + 80), 300, 1, false, 500);
+	//}
+}
+
+
+

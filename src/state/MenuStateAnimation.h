@@ -26,7 +26,7 @@ public:
 
 		if (id == "TweenAnim")
 		{
-			_addTween(createTween(TweenAnim(GameResource.getResAnim("anim")), dur / 4, 10));
+			//_addTween(createTween(TweenAnim(GameResource.getResAnim("anim")), dur / 4, 10));
 		}
 
 		if (id == "TweenRotation")

@@ -1,0 +1,20 @@
+{
+	"game": {
+		"playerName1": "Player",
+		"playerName2": "Player 2"
+	},
+	"player1": {
+		"key_up": 82,
+		"key_right": 79,
+		"key_down": 81,
+		"key_left": 80,
+		"key_shot": 44
+	},
+	"player2": {
+		"key_up": 26,
+		"key_right": 7,
+		"key_down": 22,
+		"key_left": 4,
+		"key_shot": 9
+	}
+}
