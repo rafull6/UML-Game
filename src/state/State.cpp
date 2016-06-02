@@ -8,7 +8,6 @@ State::State() {
 void State::changeState(spState next) {
 	// hide current state
 	hide();
-
 	// show next state
 	next->show();
 }
@@ -16,11 +15,9 @@ void State::changeState(spState next) {
 void State::show(){
 	//add scene view to root
 	getStage()->addChild(_view);
-	
 	//and fade in
 	this->_view->setAlpha(0);
 	this->_view->addTween(Actor::TweenAlpha(255), 300);
-
 	//call virtual method (overloaded in inherited classes)
 	_show();
 }

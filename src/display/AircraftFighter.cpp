@@ -40,6 +40,7 @@ void AircraftFighter::_init() {
 }
 
 void AircraftFighter::_setDefaultKeys() {
+	this->_keyMap    = new int[5];
 	this->_keyMap[0] = SDL_SCANCODE_UP;
 	this->_keyMap[1] = SDL_SCANCODE_RIGHT;
 	this->_keyMap[2] = SDL_SCANCODE_DOWN;
@@ -117,8 +118,8 @@ bool AircraftFighter::changeSpeed(bool accelerate) {
 	return true;
 }
 
-void AircraftFighter::setKeys(int keyMaps[]) {
-	*this->_keyMap = *keyMaps;
+void AircraftFighter::setKeys(int* keyMaps) {
+	this->_keyMap = keyMaps;
 }
 
 int AircraftFighter::hit(int damage){
