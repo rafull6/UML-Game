@@ -19,13 +19,13 @@ void InputField::_init(const std::string& startText) {
 	style.hAlign    = TextStyle::HALIGN_LEFT;
 	style.multiline = false;
 	style.font      = GameResource::ui.getResFont("normal")->getFont();
-	style.fontSize2Scale = 16;
+	style.fontSize2Scale = 14;
 
 	_text->setStyle(style);
 	_text->setText(startText);
 	_text->attachTo(this);
 
-	this->setResAnim(GameResource::ui.getResAnim("auth_n"));
+	this->setResAnim(GameResource::ui.getResAnim("input_long"));
 }
 
 void InputField::changeSize(const Vector2 &size) const {

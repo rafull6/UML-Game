@@ -119,12 +119,47 @@ void MenuState::_initSettings(const std::string& playerName1, const std::string 
 
 	spInputField playerNameInput = new InputField(playerName1);
 	playerNameInput->setAnchor(Vector2(0.5f, 0.5f));
-	playerNameInput->setX(settingsParent->getWidth() / 2);
-	playerNameInput->setY(settingsParent->getHeight() - (settingsParent->getHeight() - playerNameInput->getHeight() * 2));
+	playerNameInput->setX(settingsParent->getWidth() / 4);
+	playerNameInput->setY(settingsParent->getHeight() - (settingsParent->getHeight() - playerNameInput->getHeight() * 3));
 	playerNameInput->attachTo(settingsParent);
 	playerNameInput->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MenuState::onClickTF));
 
-	settingsParent->setName("settings");
+	spInputField playerNameInput = new InputField(player1KeyUp);
+	playerNameInput->setAnchor(Vector2(0.5f, 0.5f));
+	playerNameInput->setX(settingsParent->getWidth() / 4);
+	playerNameInput->setY(settingsParent->getHeight() - (settingsParent->getHeight() - playerNameInput->getHeight() * 3));
+	playerNameInput->attachTo(settingsParent);
+	playerNameInput->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MenuState::onClickTF));
+
+	spInputField playerNameInput = new InputField();
+	playerNameInput->setAnchor(Vector2(0.5f, 0.5f));
+	playerNameInput->setX(settingsParent->getWidth() / 4);
+	playerNameInput->setY(settingsParent->getHeight() - (settingsParent->getHeight() - playerNameInput->getHeight() * 3));
+	playerNameInput->attachTo(settingsParent);
+	playerNameInput->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MenuState::onClickTF));
+
+	spInputField playerNameInput = new InputField();
+	playerNameInput->setAnchor(Vector2(0.5f, 0.5f));
+	playerNameInput->setX(settingsParent->getWidth() / 4);
+	playerNameInput->setY(settingsParent->getHeight() - (settingsParent->getHeight() - playerNameInput->getHeight() * 3));
+	playerNameInput->attachTo(settingsParent);
+	playerNameInput->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MenuState::onClickTF));
+
+	spInputField playerNameInput = new InputField();
+	playerNameInput->setAnchor(Vector2(0.5f, 0.5f));
+	playerNameInput->setX(settingsParent->getWidth() / 4);
+	playerNameInput->setY(settingsParent->getHeight() - (settingsParent->getHeight() - playerNameInput->getHeight() * 3));
+	playerNameInput->attachTo(settingsParent);
+	playerNameInput->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MenuState::onClickTF));
+
+	spInputField playerNameInput = new InputField();
+	playerNameInput->setAnchor(Vector2(0.5f, 0.5f));
+	playerNameInput->setX(settingsParent->getWidth() / 4);
+	playerNameInput->setY(settingsParent->getHeight() - (settingsParent->getHeight() - playerNameInput->getHeight() * 3));
+	playerNameInput->attachTo(settingsParent);
+	playerNameInput->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MenuState::onClickTF));
+
+	settingsParent->setName("settingsParent");
 	settingsParent->attachTo(_playerSettings);
 	settingsParent->setAlpha(0);
 	_playerSettings->setAlpha(0);
