@@ -1,16 +1,21 @@
 #pragma once
-#pragma once
 #include "Unit.h"
 
-DECLARE_SMART(Pause, spPause);
-class Pause : public Unit
-{
-public:
-	void pauseDie(bool pause);
+using namespace oxygine;
 
-private:
+DECLARE_SMART(Pause, spPause);
+class Pause : public Unit {
+protected:
+	bool visible;
+
 	void _init();
 	void _update(const UpdateState& us);
 	void _die();
+	std::string  _type; //wpn/pup
+	int _id; //with one
+	Vector2 _pos; //where
 
+public:
+	Pause();
+	~Pause();
 };

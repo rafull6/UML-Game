@@ -9,7 +9,7 @@
 		<image file="menu.png" />
 		<image file="box9.png" />
 		<image file="bg.jpg" />
-		<image file="pause.png" />
+		<image file="pause.png" trim="false"/>
 		<image file="buttons.png" rows="5" cols="2"/>
 	</atlas>
 

@@ -1,2 +1,2 @@
-P:\Oxygine\oxygine-framework\tools\oxyresbuild -x xmls/ui.xml --src_data "P:\Oxygine\UML-Game\data" --dest_data "P:\Oxygine\UML-Game\data"
+D:\Programy\UML Projekt\oxygine-framework\tools\oxyresbuild -x xmls/ui.xml --src_data "D:\Programy\UML Projekt\UML-Game\data" --dest_data "D:\Programy\UML Projekt\UML-Game\data"
 pause

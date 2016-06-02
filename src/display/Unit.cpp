@@ -43,24 +43,7 @@ void Unit::setPosition(Vector2 newPosition) {
 
 void Unit::update(const UpdateState& us)
 {
-	const Uint8* keyDown = SDL_GetKeyboardState(0);
-	spPause pause = new Pause();
-
-	if (keyDown[_pauseKey])
-		if (_lastPause + 300 < us.time){
-			_lastPause = us.time;
-			Unit::_isPaused = !_isPaused;
-			if (Unit::_isPaused == true) {
-				//pause->init(Point(0, 0), 0, _game);   ta linijka krzaczy
-			}
-	}
-
-	if (_isPaused == false) {
-		pause->pauseDie(Unit::_isPaused);
 		_update(us);
-	}
-
-
 }
 
 float Unit::getHeight() {
@@ -71,6 +54,6 @@ float Unit::getWidth() {
 	return this->_view->getWidth();
 }
 
-bool Unit::getIsPaused() {
-	return this->_isPaused;
+spActor Unit::getView() {
+	return this->_view;
 }

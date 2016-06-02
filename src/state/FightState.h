@@ -10,6 +10,8 @@ DECLARE_SMART(FightState, spFightState);
 class FightState : public State{
 private:
 	spFightStage _fightContainer;
+	int          _keyPause;
+	bool		 _isPaused;
 
 	void onEvent(Event* event);
 

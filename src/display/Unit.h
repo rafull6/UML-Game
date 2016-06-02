@@ -10,9 +10,6 @@ protected:
 	spActor     _view;
 	FightStage* _game;
 	bool        _dead;
-	bool		_isPaused = false;
-	int			_pauseKey = SDL_SCANCODE_P;
-	timeMS      _lastPause;
 
 	virtual void _init() {}
 	virtual void _update(const UpdateState& us) {}
@@ -29,5 +26,5 @@ public:
     bool isDead() const {return _dead;}
 	float getHeight();
 	float getWidth();
-	bool getIsPaused();
+	spActor getView();
 };
