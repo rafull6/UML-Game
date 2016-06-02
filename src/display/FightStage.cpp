@@ -1,4 +1,5 @@
 #include "FightStage.h"
+#include "../core/Config.h"
 #include "../resource/GameResource.h"
 #include "Pickup.h"
 
@@ -27,9 +28,10 @@ void FightStage::init() {
 	spPickup pickup_wpn1 = new Pickup("wpn", 1);
 	pickup_wpn1->init(Vector2(scalar::randFloat(0, getWidth()), scalar::randFloat(0, getHeight())), 0, this);
 
-	// create aircrafts
+	// create aircrafts, get keys from config
 	this->_af1 = new AircraftFighter();
 	this->_af1->init(Vector2(0,0), 180, this);
+	this->_af1->setKeys(Config::getInstance().getPlayerKeys(0));
 	
 	// update aircraft position
 	this->_af1->setPosition(Vector2(this->getWidth() / 2 - this->_af1->getWidth() / 2, this->getHeight() - this->_af1->getHeight()));

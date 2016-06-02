@@ -7,6 +7,7 @@ DECLARE_SMART(MenuState, spMenuState);
 class MenuState : public State{
 private:
 	spSprite     _mainMenu;
+	spSprite     _playerSettings;
 
 	//animation special effects
 	spSprite     _enginesAnimation;
@@ -19,17 +20,23 @@ private:
 	spInputField _currentTF;
 	spInputText  _input;
 
-	void _initSettings(const std::string& playerName1, const std::string &playerName2);
+	int _nextState;
+
+	void _initSettings(const std::string& playerName1, const std::string &playerName2, int* pKey1, int* pKey2);
 	void _initMenu();
 	void onClickTF(Event* ev);
 	void onEvent(Event* ev);
 	void onComplete(Event* ev);
 	void onTweenDone(Event* ev);
+	void onSettingsAction(Event* ev);
 	void _initEngineEffects();
 	void _initFireBottomEffects();
 	void _initSmokeBottomEffects();
 	void _initSparksTopEffects();
 public:
+	static const int MAIN_MENU     = 0;
+	static const int SETTINGS_MENU = 1;
+
 	MenuState();
 	static spMenuState instance;
 	Tween::EASE _ease;

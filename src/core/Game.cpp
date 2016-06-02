@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Config.h"
 #include "oxygine-framework.h"
 #include "../resource/GameResource.h"
 #include "../state/FightState.h"
@@ -18,10 +19,16 @@ void Game::init() {
 	//Loading resources
 	GameResource::load();
 
+	//Loading config 
+	Config::getInstance().loadConfig("../data/config.json");
+	log::messageln("%s", Config::getInstance().toString().c_str());
+
 	// create gaming state
 	FightState::instance = new FightState();
+	
 	// create menu state 
 	MenuState::instance = new MenuState();
+	
 	// open state (starts from menu)
 	MenuState::instance->show();
 }
@@ -52,7 +59,7 @@ void Game::setWindowIcon(const char* bmpPath) {
 		SDL_FreeSurface(surface);
 		return;
 	}
-	
+
 	// The icon is attached to the window pointer
 	SDL_SetWindowIcon(window, surface);
 

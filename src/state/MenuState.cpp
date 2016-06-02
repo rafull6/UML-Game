@@ -2,7 +2,7 @@
 #include "Sprite.h"
 #include "initActor.h"
 #include "../resource/GameResource.h"
-#include "../display/mButton.h"
+#include "../display/SimpleButton.h"
 #include "../core/Config.h"
 #include "FightState.h"
 
@@ -32,12 +32,26 @@ MenuState::MenuState(){
 	_mainMenu->setX(_view->getWidth() / 2);
 	_mainMenu->setY((_view->getHeight() / 2) + 80);
 
+	//create settings block
+	_playerSettings = initActor(new Sprite,
+		arg_resAnim = GameResource::ui.getResAnim("set_bg"),
+		arg_anchor = Vector2(0.5f, 0.5f),
+		arg_attachTo = _view);
+	_playerSettings->setX(_view->getWidth() / 2);
+	_playerSettings->setY((_view->getHeight() / 2) + 60);
+
 	
 	this->_initEngineEffects();
 	this->_initFireBottomEffects();
 	this->_initSmokeBottomEffects();
 	this->_initSparksTopEffects();
-	this->_initSettings(Config::getInstance().getPlayerName(0), Config::getInstance().getPlayerName(1));
+	this->_initSettings(
+		Config::getInstance().getPlayerName(0), 
+		Config::getInstance().getPlayerName(1),
+		Config::getInstance().getPlayerKeys(0),
+		Config::getInstance().getPlayerKeys(1)
+	);
+
 	this->_initMenu();
 	
 	// add events to menu
@@ -51,74 +65,116 @@ void MenuState::_initMenu() {
 	menuClip->attachTo(_mainMenu);
 	menuClip->setName("menuClip");
 
-	//create play button
-	spSprite playBtn = initActor(new mButton,
-		arg_name = "play-normal",
-		arg_resAnim = GameResource::ui.getResAnim("btnn"),
-		arg_anchor = Vector2(0.5f, 0.5f),
-		arg_attachTo = menuClip);
-		playBtn->setX(menuClip->getWidth() / 2);
-		playBtn->setY(menuClip->getHeight() - (menuClip->getHeight() - playBtn->getHeight() * 2));
+	float buttonX        = menuClip->getWidth() / 2;
+	float buttonY        = 74;
+	char* menuBtns[]     = {"PLAY", "SETTINGS", "AUTHORS", "WE ON GITHUB", "EXIT THE GAME"};
+	char* menuBtnsName[] = {"play", "settings", "authors", "github", "exit"};
 
-	//create settings button
-	spSprite setBtn = initActor(new mButton,
-		arg_name = "set-normal",
-		arg_resAnim = GameResource::ui.getResAnim("btnh"),
-		arg_anchor = Vector2(0.5f, 0.5f),
-		arg_attachTo = menuClip);
-	setBtn->setX(menuClip->getWidth() / 2);
-	setBtn->setY(playBtn->getY() + setBtn->getHeight() + 10);
+	spSimpleButton button;
 
-	//create git button
-	spSprite gitBtn = initActor(new mButton,
-		arg_name = "git-normal",
-		arg_resAnim = GameResource::ui.getResAnim("git_n"),
-		arg_anchor = Vector2(0.5f, 0.5f),
-		arg_attachTo = menuClip);
-	gitBtn->setX(menuClip->getWidth() / 2);
-	gitBtn->setY(setBtn->getY() + gitBtn->getHeight() + 10);
+	for (int i = 0; i < 5; i++) {
+		button = new SimpleButton();
+		button->setName(menuBtnsName[i]);
+		button->setAnchor(Vector2(0.5f, 0.5f));
+		button->setText(menuBtns[i]);
+		button->attachTo(menuClip);
+		button->setPosition(buttonX, buttonY);
 
-	//create auth button
-	spSprite authBtn = initActor(new mButton,
-		arg_name = "auth-normal",
-		arg_resAnim = GameResource::ui.getResAnim("auth_n"),
-		arg_anchor = Vector2(0.5f, 0.5f),
-		arg_attachTo = menuClip);
-	authBtn->setX(menuClip->getWidth() / 2);
-	authBtn->setY(gitBtn->getY() + authBtn->getHeight() + 10);
-
-	//create auth button
-	spSprite exitBtn = initActor(new mButton,
-		arg_name = "exit-normal",
-		arg_resAnim = GameResource::ui.getResAnim("exit_n"),
-		arg_anchor = Vector2(0.5f, 0.5f),
-		arg_attachTo = menuClip);
-	exitBtn->setX(menuClip->getWidth() / 2);
-	exitBtn->setY(authBtn->getY() + exitBtn->getHeight() + 10);
+		buttonY += button->getHeight() + 13;
+	}
 }
 
-void MenuState::_initSettings(const std::string& playerName1, const std::string &playerName2) {
-	spActor settingsParent = new Actor();
-	settingsParent->setSize(_mainMenu->getWidth(), _mainMenu->getHeight());
-
+void MenuState::_initSettings(const std::string& playerName1, const std::string &playerName2, int* playerKey1, int* playerKey2) {
 	_input = new InputText();
 	_input->addEventListener(Event::COMPLETE, CLOSURE(this, &MenuState::onComplete));
 
-	spTextField playerNameLabel = initActor(new TextField,
-		arg_attachTo = settingsParent,
-		arg_text = "Player 1:"
-	);
+	spInputField pName1     = new InputField(playerName1, true);
+	spInputField pKeyUp1    = new InputField(playerKey1[0], false);
+	spInputField pKeyDown1  = new InputField(playerKey1[2], false);
+	spInputField pKeyLeft1  = new InputField(playerKey1[3], false);
+	spInputField pKeyRight1 = new InputField(playerKey1[1], false);
+	spInputField pKeyShot1  = new InputField(playerKey1[4], true);
 
-	spInputField playerNameInput = new InputField(playerName1);
-	playerNameInput->setAnchor(Vector2(0.5f, 0.5f));
-	playerNameInput->setX(settingsParent->getWidth() / 2);
-	playerNameInput->setY(settingsParent->getHeight() - (settingsParent->getHeight() - playerNameInput->getHeight() * 2));
-	playerNameInput->attachTo(settingsParent);
-	playerNameInput->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MenuState::onClickTF));
+	spInputField pName2     = new InputField(playerName2, true);
+	spInputField pKeyUp2    = new InputField(playerKey2[0], false);
+	spInputField pKeyDown2  = new InputField(playerKey2[2], false);
+	spInputField pKeyLeft2  = new InputField(playerKey2[3], false);
+	spInputField pKeyRight2 = new InputField(playerKey2[1], false);
+	spInputField pKeyShot2  = new InputField(playerKey2[4], true);
 
-	settingsParent->setName("settings");
-	settingsParent->attachTo(_mainMenu);
-	settingsParent->setAlpha(0);
+	//action button
+	spSimpleButton saveBtn   = new SimpleButton("small_btn");
+	spSimpleButton cancelBtn = new SimpleButton("cancel_btn");
+
+	// left column = player 1
+	pName1->setPosition(39, 60);
+	pName1->addLabel("Player 1:");
+	pName1->attachTo(_playerSettings);
+	
+	pKeyUp1->setPosition(39, 119);
+	pKeyUp1->addLabel("Key Up:");
+	pKeyUp1->attachTo(_playerSettings);
+
+	pKeyDown1->setPosition(142, 119);
+	pKeyDown1->addLabel("Key Down:");
+	pKeyDown1->attachTo(_playerSettings);
+
+	pKeyLeft1->setPosition(39, 178);
+	pKeyLeft1->addLabel("Key Left:");
+	pKeyLeft1->attachTo(_playerSettings);
+
+	pKeyRight1->setPosition(142, 178);
+	pKeyRight1->addLabel("Key Right:");
+	pKeyRight1->attachTo(_playerSettings);
+
+	pKeyShot1->setPosition(39, 237);
+	pKeyShot1->addLabel("Key Shot:");
+	pKeyShot1->attachTo(_playerSettings);
+
+	// right column = player 2
+	pName2->setPosition(302, 60);
+	pName2->addLabel("Player 2:");
+	pName2->attachTo(_playerSettings);
+
+	pKeyUp2->setPosition(302, 119);
+	pKeyUp2->addLabel("Key Up:");
+	pKeyUp2->attachTo(_playerSettings);
+
+	pKeyDown2->setPosition(405, 119);
+	pKeyDown2->addLabel("Key Down:");
+	pKeyDown2->attachTo(_playerSettings);
+
+	pKeyLeft2->setPosition(302, 178);
+	pKeyLeft2->addLabel("Key Left:");
+	pKeyLeft2->attachTo(_playerSettings);
+
+	pKeyRight2->setPosition(405, 178);
+	pKeyRight2->addLabel("Key Right:");
+	pKeyRight2->attachTo(_playerSettings);
+
+	pKeyShot2->setPosition(302, 237);
+	pKeyShot2->addLabel("Key Shot:");
+	pKeyShot2->attachTo(_playerSettings);
+
+	// bottom row = actions
+	saveBtn->setText("SAVE");
+	saveBtn->setName("saveBTN");
+	saveBtn->setPosition(164, 310);
+	saveBtn->attachTo(_playerSettings);
+
+	cancelBtn->setText("CANCEL");
+	cancelBtn->changeColor(Color::Red);
+	cancelBtn->setName("cancelBTN");
+	cancelBtn->setPosition(282, 310);
+	cancelBtn->attachTo(_playerSettings);
+
+	// add events
+	saveBtn->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MenuState::onClickTF));
+	cancelBtn->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MenuState::onClickTF));
+	_playerSettings->setName("settings");
+	_playerSettings->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MenuState::onClickTF));
+	// hide menu
+	_playerSettings->setAlpha(0);
 };
 
 void MenuState::_initEngineEffects() {
@@ -131,7 +187,6 @@ void MenuState::_initEngineEffects() {
 	_enginesAnimation->setX(_view->getWidth() / 2 - 160);
 	_enginesAnimation->setY(_view->getHeight() / 2 - 213);
 
-	//_mainStateEffectsTween = _enginesAnimation->addTween(Actor::TweenAlpha(0), 1000, 0);
 	_mainStateEffectsTween = _enginesAnimation->addTween(TweenAnim(GameResource::ui.getResAnim("engines-fire")), 700, 0);
 	log::messageln("show main state Engine effects");
 }
@@ -142,7 +197,7 @@ void MenuState::_initFireBottomEffects() {
 	_fireBottomAnimation->setAnchor(0.5f, 0.5f);
 	_fireBottomAnimation->setResAnim(GameResource::ui.getResAnim("fire_bottom_anim"));
 
-	//engines animation initial position
+	//fire animation initial position
 	_fireBottomAnimation->setX(_view->getWidth() - _fireBottomAnimation->getWidth() / 3);
 	_fireBottomAnimation->setY(_view->getHeight() / 2 + _fireBottomAnimation->getHeight() / 3 + 50);
 
@@ -156,7 +211,7 @@ void MenuState::_initSmokeBottomEffects() {
 	_smokeLeftBottomAnimation->setAnchor(0.5f, 0.5f);
 	_smokeLeftBottomAnimation->setResAnim(GameResource::ui.getResAnim("left_bottom_smoke_anim"));
 
-	//engines animation initial position
+	//smoke animation initial position
 	_smokeLeftBottomAnimation->setX(_view->getWidth() - _view->getWidth() + _smokeLeftBottomAnimation->getWidth()-180);
 	_smokeLeftBottomAnimation->setY(_view->getHeight() / 2 + 115);
 	_smokeLeftBottomAnimation->setAlpha(10);
@@ -172,7 +227,7 @@ void MenuState::_initSparksTopEffects() {
 	_sparksTopRightAnimation->setResAnim(GameResource::ui.getResAnim("sparks_top_anim"));
 	_sparksTopRightAnimation->setAlpha(200);
 
-	//engines animation initial position
+	//sparks animation initial position
 	_sparksTopRightAnimation->setX(_view->getWidth());
 	_sparksTopRightAnimation->setY(_view->getHeight() - (_view->getHeight() /4)*3);
 
@@ -184,39 +239,68 @@ void MenuState::onEvent(Event* ev) {
 	const std::string target = ev->target->getName();
 
 	// exit app
-	if (target == "exit-normal") {
+	if (target == "exit") {
 		core::requestQuit();
 	}
-	else if (target == "play-normal") {
+	else if (target == "play") {
 		log::messageln("mode changed");
 		//clicked to play button change scene
 		changeState(FightState::instance);
 	}
-	else if (target == "set-normal") {
-		_mainMenuTween = _mainMenu->addTween(Actor::TweenY(-300), 300);
-		_mainMenuTween->setName("open-settings");
+	else if (target == "settings") {
+		_nextState = MenuState::SETTINGS_MENU;
+		
+		_mainMenu->addTween(Actor::TweenAlpha(0), 200);
+		_mainMenuTween = _mainMenu->addTween(Actor::TweenY(_mainMenu->getY() - 20), 400);
+		
 		_mainMenuTween->setDoneCallback(CLOSURE(this, &MenuState::onTweenDone));
-		log::messageln("show settings");
 	}
 	else if (target == "auth-normal") {
 		
 	}
 }
 
+void MenuState::onSettingsAction(Event* ev) {
+	const std::string target = ev->target->getName();
+
+	if (target == "saveBTN") {
+		
+	}else if(target == "cancelBTN"){
+		log::messageln("cancel");
+	}
+}
+
 void MenuState::onClickTF(Event* ev) {
-	log::messageln("tf clicked");
+	const std::string target = ev->target->getName();
+	const std::string cTarget = ev->currentTarget->getName();
+
+	if (target == "settings" || cTarget == "settings") return;
+
+	if (cTarget == "saveBTN") {
+		return;
+	}
+	else if (cTarget == "cancelBTN") {
+		_nextState = MenuState::MAIN_MENU;
+
+		_playerSettings->addTween(Actor::TweenAlpha(0), 200);
+		_mainMenuTween = _playerSettings->addTween(Actor::TweenY(_playerSettings->getY() - 20), 400);
+
+		_mainMenuTween->setDoneCallback(CLOSURE(this, &MenuState::onTweenDone));
+		return;
+	}
+
 	if (_currentTF) {
 		_currentTF->setColor(Color::White);
 	}
-	_currentTF = safeSpCast<InputField>(ev->currentTarget);
-	_input->start(_currentTF->getText());
-	log::messageln("input start");
-	//_currentTF->setColor(Color::Red);
+
+	_currentTF = safeSpCast<InputField>(ev->target);
+	_input->start(_currentTF->getTextField());
 };
 
-void MenuState::onComplete(Event * ev) {
+void MenuState::onComplete(Event* ev) {
 	if (_currentTF) {
 		_currentTF->setColor(Color::White);
+		_currentTF->updateTextField();
 	}
 	_currentTF = 0;
 	InputText::stopAnyInput();
@@ -224,15 +308,19 @@ void MenuState::onComplete(Event * ev) {
 
 void MenuState::onTweenDone(Event* ev) {
 	log::message("tween done");
+	float posY = 0;
 
-	log::messageln("%s", ev->target->getName().c_str());
-	//if (ev->currentTarget->getName() == "open-settings"){
-	_mainMenu->getChild("menuClip")->setAlpha(0);
-	_mainMenu->getChild("settings")->setAlpha(255);
+	switch (_nextState) {
+	case MenuState::SETTINGS_MENU:
+		posY = _playerSettings->getY() + 20;
+		_playerSettings->addTween(Actor::TweenAlpha(255), 200);
+		_playerSettings->addTween(Actor::TweenY(posY), 400);
 		
-	_mainMenu->addTween(Actor::TweenY((_view->getHeight() / 2) + 80), 300, 1, false, 500);
-	//}
+		break;
+	case MenuState::MAIN_MENU:
+		posY = _mainMenu->getY() + 20;
+		_mainMenu->addTween(Actor::TweenAlpha(255), 200);
+		_mainMenuTween = _mainMenu->addTween(Actor::TweenY(posY), 400);
+		break;
+	}
 }
-
-
-
