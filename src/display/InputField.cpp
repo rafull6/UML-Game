@@ -30,10 +30,6 @@ void InputField::_init(const std::string& startText, const bool& longField) {
 	style.vAlign    = TextStyle::VALIGN_TOP;
 	style.hAlign    = TextStyle::HALIGN_LEFT;
 	style.multiline = false;
-<<<<<<< HEAD
-	style.font      = GameResource::ui.getResFont("normal")->getFont();
-	style.fontSize2Scale = 14;
-=======
 	style.font      = systemFont;
 	style.fontSize2Scale = 14;
 
@@ -52,7 +48,6 @@ void InputField::_init(const std::string& startText, const bool& longField) {
 void InputField::addLabel(const std::string &text) {
 	this->addLabel(text, 12);
 }
->>>>>>> bccb87eb560fc4ca989f5f48b1c5129e3f0fda55
 
 void InputField::addLabel(const std::string &text, const int &size) {
 	_labelField = new TextField();
@@ -88,12 +83,8 @@ void InputField::updateTextField() {
 	}
 }
 
-<<<<<<< HEAD
-	this->setResAnim(GameResource::ui.getResAnim("input_long"));
-=======
 void InputField::changeSize(const Vector2 &size) {
 	_textField->setSize(size);
->>>>>>> bccb87eb560fc4ca989f5f48b1c5129e3f0fda55
 }
 
 spTextField InputField::getTextField() const {

@@ -24,7 +24,7 @@ void SimpleButton::setText(const char* text){
 
 void SimpleButton::setText(const char* text, const int &position){
 	_textField->setText(text);
-	_textField->setY(this->getHeight() / 2.0 - _textField->getTextRect().getHeight() / 2.0);
+	_textField->setY(this->getHeight() / 2.0f - _textField->getTextRect().getHeight() / 2.0f);
 	
 	switch (position) {
 	case SimpleButton::BUTTON_LEFT:
@@ -33,7 +33,7 @@ void SimpleButton::setText(const char* text, const int &position){
 		break;
 	case SimpleButton::BUTTON_CENTER:
 	default:
-		_textField->setX(this->getWidth() / 2.0 - _textField->getTextRect().getWidth() / 2.0);
+		_textField->setX(this->getWidth() / 2.0f - _textField->getTextRect().getWidth() / 2.0f);
 		
 		break;
 	}
