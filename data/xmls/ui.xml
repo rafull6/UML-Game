@@ -37,6 +37,7 @@
 	<atlas>
 		<image file="sky.jpg" />
 		<image file="ship-red.png" />
+		<image file="ship-green.png" />
 		<image file="shipengine.png" />
 		<image file="rocket.png" />
 		<image file="explosion.png" cols="12"/>
