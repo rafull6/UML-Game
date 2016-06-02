@@ -13,7 +13,7 @@ protected:
 	float        _speed;
 	bool         _isFrozen;
 	int          _hp;
-	int          _keyMap[5];
+	int*         _keyMap;
 	RectF        _bounds;
 	timeMS       _lastBulletSpawn;
 	spSprite     _ship;
