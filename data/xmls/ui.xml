@@ -27,6 +27,7 @@
 		<image file="input_short.png" />
 		<image file="input_long.png" />
 		<image file="set_bg.png" />
+		<image file="fight-gui.png" />
 	</atlas>
 
 	<set path = "fonts" />
