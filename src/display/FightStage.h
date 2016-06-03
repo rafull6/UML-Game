@@ -17,11 +17,16 @@ protected:
 	spAircraftFighter _af2;
 
 	spSprite _bg;
+	spSprite _guiPLayerRed;
+	spSprite _guiPLayerGreen;
+	spSprite _bgClouds;
 
 	std::list<spUnit> _units;
 
 	void doUpdate(const UpdateState& us);
 	void _showMenu();
+	void _initGui();
+	void _initBgClouds();
 
 public:
 	FightStage();
