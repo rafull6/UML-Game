@@ -16,6 +16,8 @@ protected:
 	spAircraftFighter _af1;
 	spAircraftFighter _af2;
 
+	spTextField createText(const std::string& txt, const std::string& color);
+
 	spSprite _bg;
 	spSprite _guiPLayerRed;
 	spSprite _guiPLayerGreen;
