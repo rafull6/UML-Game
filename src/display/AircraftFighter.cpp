@@ -21,7 +21,7 @@ void AircraftFighter::_init() {
 	this->_hp = 5;
 
 	// set initial speed 
-	this->_speed = 5.0f;
+	this->_speed = 10.0f;
 
 	// create ship
 	this->_ship = new Sprite();
@@ -51,9 +51,17 @@ void AircraftFighter::_setDefaultKeys() {
 void AircraftFighter::_update(const UpdateState& us) {
 	Vector2 dir;
 	Vector2 pos = this->getPosition();
+
+	float _speedMultiplierPup = 0.0f;
 	
-	float currentSpeed = this->_speed * (us.dt / 1000.0f);
-	float angle        = this->_view->getRotation();
+	//get Pup multiplier
+	for (int i = 0; i < 4; i++){
+		_speedMultiplierPup += _speedPickUpMultiplier[i];
+	}
+
+	_currentTime = us.time;
+	float currentSpeed = ((this->_speed + _speedMultiplierPup)* this->_speedMultiplier )*(us.dt / 1000.0f);
+	float angle = this->_view->getRotation();
 
 	const Uint8* keyDown = SDL_GetKeyboardState(0);
 	
@@ -62,14 +70,12 @@ void AircraftFighter::_update(const UpdateState& us) {
 	pos += dir;
 
 	// Forward
-	if (keyDown[_keyMap[0]]) this->changeSpeed(true);
-	else this->changeSpeed(false);
+	if (keyDown[_keyMap[2]]) this->_speedMultiplier = 0.5f;
+	else if (keyDown[_keyMap[0]]) this->_speedMultiplier = 2.5f;
+	else this->_speedMultiplier = 1.0f;
 
 	// Right
 	if (keyDown[_keyMap[1]]) angle += currentSpeed;
-
-	// Backward
-	if (keyDown[_keyMap[2]]) log::messageln("key down pressed");
 
 	// Left
 	if (keyDown[_keyMap[3]]) angle -= currentSpeed;
@@ -95,6 +101,16 @@ void AircraftFighter::_update(const UpdateState& us) {
 
 	this->_view->setPosition(pos);
 	this->_view->setRotation(angle);
+	
+	//turn off pup 2,3
+	if (_lastPickUp[2] + 400 < us.time) {
+		_speedPickUpMultiplier[0] = 0.0f;
+
+	if (_lastPickUp[3] + 400 < us.time) {
+		_speedPickUpMultiplier[1] = 0.0f;
+
+		}
+	}
 }
 
 /**
@@ -110,11 +126,11 @@ bool AircraftFighter::changeSpeed(bool accelerate) {
 	}
 
 	if (!accelerate) {
-		this->_speed = 5.0f;
+		this->_speedMultiplier = 2.5f;
 		return true;
 	}
 
-	this->_speed = 10.0f;
+	this->_speedMultiplier = 1.0f;
 	return true;
 }
 
@@ -127,6 +143,19 @@ int AircraftFighter::hit(int damage){
 }
 
 void AircraftFighter::pickupPup(int id){
+	switch (id) {
+	case 2: //Spowolniajaca chmurka
+	{
+		_lastPickUp[2] = _currentTime;
+		_speedPickUpMultiplier[0] = -5;
+		break;
+	}
+	case 3: //Przyspieszajaca chmurka
+	{
+		_lastPickUp[3] = _currentTime;
+		_speedPickUpMultiplier[1] = 5;
+		break;
+	}
 }
 
 void AircraftFighter::pickupWpn(int id){

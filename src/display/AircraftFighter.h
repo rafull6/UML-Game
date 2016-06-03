@@ -11,11 +11,15 @@ protected:
 	const char*  _color;
 	const char*  _name;
 	float        _speed;
+	float        _speedMultiplier =1.0f;
+	float        _speedPickUpMultiplier[2] = { 0.0f, 0.0f };
+	timeMS       _lastPickUp[4] = { 0,0,0,0 };
+	timeMS		 _currentTime;
 	bool         _isFrozen;
 	int          _hp;
 	int*         _keyMap;
 	RectF        _bounds;
-	timeMS       _lastBulletSpawn;
+	timeMS       _lastBulletSpawn =0;
 	spSprite     _ship;
 
 	void _init();

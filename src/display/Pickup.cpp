@@ -4,7 +4,7 @@
 #include "FightStage.h"
 #include "Unit.h"
 
-Pickup::Pickup(std::string type, int id):_type(type),_id(id){
+Pickup::Pickup(std::string type, int id, int quantity, double diameter):_type(type),_id(id),_quantity(quantity),_diameter(diameter){
 }
 
 
@@ -13,7 +13,6 @@ Pickup::~Pickup(){
 
 
 void Pickup::_init(){
-	//you could hit obstacle 3 times
 	spSprite sprite = new Sprite;
 	std::string resName = _type+ "-" + std::to_string(_id);
 	sprite->setResAnim(GameResource::ui.getResAnim(resName));
@@ -32,8 +31,8 @@ void Pickup::_init(){
 	_pos = _view->getPosition();
 }
 
-void Pickup::_update(const UpdateState& us){
-	for (std::list<spUnit>::iterator i = _game->_units.begin(); i != _game->_units.end(); ++i){
+void Pickup::_update(const UpdateState& us) {
+	for (std::list<spUnit>::iterator i = _game->_units.begin(); i != _game->_units.end(); ++i) {
 		spUnit unit = *i;
 		//list of units has everything, but we need only Enemies
 		spAircraftFighter player = dynamic_cast<AircraftFighter*>(unit.get());
@@ -41,23 +40,46 @@ void Pickup::_update(const UpdateState& us){
 
 		if (!player) {
 			continue;
-		} else {
+		}
+		else {
 			Vector2 d = unit->getPosition() - _pos;
-			if (d.length() < 20){
-				log::message("Taken %s-%d\n", _type.c_str(), _id);
-				if (!_type.compare("wpn")){
-					player->pickupWpn(_id);
+			if (d.length() < _diameter) {
+
+				if (_lastPickUp + 300 < us.time) {
+					_lastPickUp = us.time;
+					log::message("Taken  %s-%d\n", _type.c_str(), _id);
+					if (!_type.compare("wpn")) {
+						player->pickupWpn(_id);
+					}
+					else
+					{
+						player->pickupPup(_id);
+					}
+
+					if (_quantity > 0)
+					{
+						_quantity--;
+
+						//new pos
+						//pickup_wpn0->init(Vector2(scalar::randFloat(0, getWidth()), scalar::randFloat(0, getHeight())), 0, this);
+						Vector2 newPos = Vector2(scalar::randFloat(0, 640), scalar::randFloat(0, 520));
+
+						this->_view->setPosition(newPos);
+						//this->setPosition(newPos);
+						_pos = newPos;
+					}
+					
+					else if (_quantity == 0) _die();
+
+					return;
+
+
 				}
-				else
-				{
-					player->pickupPup(_id);
-				}
-				_die();
-				return;
 			}
 		}
 	}
 }
+
 
 
 void Pickup::_die(){
