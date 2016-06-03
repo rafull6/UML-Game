@@ -4,7 +4,7 @@
 #include "FightStage.h"
 #include "Unit.h"
 
-Pickup::Pickup(std::string type, int id):_type(type),_id(id){
+Pickup::Pickup(std::string type, int id) :_type(type), _id(id) {
 }
 
 
@@ -15,7 +15,7 @@ Pickup::~Pickup(){
 void Pickup::_init(){
 	//you could hit obstacle 3 times
 	spSprite sprite = new Sprite;
-	std::string resName = _type+ "-" + std::to_string(_id);
+	std::string resName = _type + "-" + std::to_string(_id);
 	sprite->setResAnim(GameResource::ui.getResAnim(resName));
 	sprite->attachTo(_view);
 	sprite->setAnchor(Vector2(0.5f, 0.5f));
@@ -32,7 +32,9 @@ void Pickup::_init(){
 	_pos = _view->getPosition();
 }
 
+
 void Pickup::_update(const UpdateState& us){
+	
 	for (std::list<spUnit>::iterator i = _game->_units.begin(); i != _game->_units.end(); ++i){
 		spUnit unit = *i;
 		//list of units has everything, but we need only Enemies

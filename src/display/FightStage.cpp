@@ -28,14 +28,14 @@ void FightStage::init() {
 	spPickup pickup_wpn1 = new Pickup("wpn", 1);
 	pickup_wpn1->init(Vector2(scalar::randFloat(0, getWidth()), scalar::randFloat(0, getHeight())), 0, this);
 
-	
-	pause = new Pause();
-	pause->init(Point(0, 0), 0, this);
-
 
 	// create aircrafts
 	this->_af1 = new AircraftFighter();
 	this->_af1->init(Vector2(0,0), 180, this);
+
+	// create pause screen
+	pause = new Pause();
+	pause->init(Point(0, 0), 0, this);
 	
 	// update aircraft position
 	this->_af1->setPosition(Vector2(this->getWidth() / 2 - this->_af1->getWidth() / 2, this->getHeight() - this->_af1->getHeight()));

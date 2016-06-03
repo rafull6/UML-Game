@@ -17,24 +17,9 @@ void Pause::_init() {
 	spSprite sprite = new Sprite;
 	sprite->setResAnim(GameResource::ui.getResAnim("pause"));
 	sprite->attachTo(_view);
-	sprite->setAnchor(Vector2(0.5f, 0.5f));
+	sprite->setAnchor(Point(0, 0));
 }
 
 void Pause::_update(const UpdateState& us) {
-	/*
-	const Uint8* keyDown = SDL_GetKeyboardState(0);
 
-	if (_isPaused == false) {
-		this->_view->setVisible(false);
-	}
-	else {
-		this->_view->setVisible(true);
-	}*/
-}
-
-
-void Pause::_die() {
-	//dead, hide it with alpha tween
-	_dead = true;
-	_view->addTween(Actor::TweenAlpha(0), 300)->setDetachActor(true);
 }

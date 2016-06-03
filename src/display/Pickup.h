@@ -14,7 +14,7 @@ protected:
 	Vector2 _pos; //where
 
 public:
-	Pickup(std::string type,  int id);
+	Pickup(std::string type, int id);
 	~Pickup();
 };
 
