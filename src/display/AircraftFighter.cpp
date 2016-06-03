@@ -21,7 +21,7 @@ void AircraftFighter::_init() {
 	this->_hp = 5;
 
 	// set initial speed 
-	this->_speed = 10.0f;
+	this->_speed = 6.0f;
 
 	// create ship
 	this->_ship = new Sprite();
@@ -96,7 +96,7 @@ void AircraftFighter::_update(const UpdateState& us) {
 	
 	if (!_bounds.pointIn(pos)) {
 		log::messageln("aircraft out of bounds");
-		angle += (180 * M_PI) / 180;
+		angle += (float)((180 * M_PI) / 180);
 	}
 
 	this->_view->setPosition(pos);
@@ -144,19 +144,20 @@ int AircraftFighter::hit(int damage){
 
 void AircraftFighter::pickupPup(int id){
 	switch (id) {
-	case 2: //Spowolniajaca chmurka
-	{
-		_lastPickUp[2] = _currentTime;
-		_speedPickUpMultiplier[0] = -5;
-		break;
+		case 2: //Spowolniajaca chmurka
+		{
+			_lastPickUp[2] = _currentTime;
+			_speedPickUpMultiplier[0] = -5;
+			break;
+		}
+		case 3: //Przyspieszajaca chmurka
+		{
+			_lastPickUp[3] = _currentTime;
+			_speedPickUpMultiplier[1] = 5;
+			break;
+		}
 	}
-	case 3: //Przyspieszajaca chmurka
-	{
-		_lastPickUp[3] = _currentTime;
-		_speedPickUpMultiplier[1] = 5;
-		break;
-	}
-}
+};
 
 void AircraftFighter::pickupWpn(int id){
 }
